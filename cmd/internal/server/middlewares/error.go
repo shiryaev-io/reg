@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"reg/cmd/internal/res/strings"
 	"reg/cmd/internal/server/exceptions"
-	"reg/cmd/internal/server/models/responces"
+	"reg/cmd/internal/server/models/responses"
 )
 
 // Функция handler, которая возвращает ошибку
 type ErrorHandlerFunc func(
 	response http.ResponseWriter, 
 	request *http.Request,
-) (*responces.Common, error)
+) (*responses.Common, error)
 
 // Обрабатывает ошибки
 func ErrorMiddleware(next ErrorHandlerFunc) http.Handler {

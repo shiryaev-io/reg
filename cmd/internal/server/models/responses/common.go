@@ -1,4 +1,4 @@
-package responces
+package responses
 
 // Содержит статус код и тело ответа
 type Common struct {
