@@ -17,7 +17,7 @@ services:
       retries: 5
       start_period: 10s
     networks:
-      - service_network
+      - registration_network
     volumes:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
       # - ..:/var/lib/postgresql/data
@@ -35,7 +35,12 @@ services:
     depends_on:
       - auth_db
     networks:
+      - registration_network
       - service_network
 
 networks:
+  registration_network:
   service_network:
+    # Добавляется название сети, чтобы другие проекты с docker-compose 
+    # могли видеть докер с текущей сетью
+    name: services_network
