@@ -33,7 +33,7 @@ services:
     ports:
       - "${SERVICE_PORT}:${SERVICE_PORT}"
     depends_on:
-      - auth_db
+      - reg_db
     networks:
       - registration_network
       - service_network

@@ -33,7 +33,7 @@ func (controller *RegistrationController) Registration(
 		return nil, exceptions.BadRequest("Неверный формат Body", err)
 	}
 
-	userDto, err := controller.UserService.Registration(
+	err = controller.UserService.Registration(
 		userRequest.Email,
 		userRequest.Password,
 	)
@@ -41,13 +41,8 @@ func (controller *RegistrationController) Registration(
 		return nil, exceptions.BadRequest("Не удалось зарегистрироваться", err)
 	}
 
-	jsonBody, err := json.Marshal(userDto)
-	if err != nil {
-		return nil, exceptions.ServerError("Что-то пошло не так", err)
-	}
-
 	return &responses.Common{
-		Status: http.StatusOK,
-		Body:   jsonBody,
+		Status: http.StatusNoContent,
+		Body:   nil,
 	}, err
 }
