@@ -13,8 +13,8 @@ import (
 
 // Контроллер для регистрации пользователей
 type RegistrationController struct {
-	UserService *services.UserService
-	Logger      *logging.Logger
+	RegService *services.RegistrationService
+	Logger     *logging.Logger
 }
 
 // Сценарий регистрации пользователей
@@ -23,7 +23,7 @@ func (controller *RegistrationController) Registration(
 	request *http.Request,
 ) (*responses.Common, error) {
 	controller.Logger.Infoln(strings.LogGettingRequestBody)
-	
+
 	userRequest := &requests.User{}
 	err := json.NewDecoder(request.Body).Decode(userRequest)
 	if err != nil {
@@ -34,7 +34,7 @@ func (controller *RegistrationController) Registration(
 
 	controller.Logger.Infoln(strings.LogRegistration)
 
-	err = controller.UserService.Registration(
+	err = controller.RegService.Registration(
 		userRequest.Email,
 		userRequest.Password,
 	)
