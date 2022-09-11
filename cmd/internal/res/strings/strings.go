@@ -6,5 +6,7 @@ const (
 	MessageUnforeseenError = "Непредвиденная ошибка"
 
 	// Строки ошибок
-	ErrorUserUnauthorized = "Пользователь не авторизован"
+	ErrorUserWithEmailExists       = "Пользователь с почтовым адресом %s уже существует"
+	ErrorRegistrationTryAgainLater = "Не удалось зарегистрироваться. Попробуйте позже"
+	ErrorTryEnterOtherData         = "Попробуйте ввести другие данные"
 )

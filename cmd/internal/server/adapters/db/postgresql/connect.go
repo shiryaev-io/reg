@@ -3,6 +3,7 @@ package postgresql
 import (
 	"context"
 	"fmt"
+	"reg/cmd/internal/res/strings"
 	"reg/cmd/internal/server/config"
 	"reg/cmd/pkg/logging"
 	"time"
@@ -33,16 +34,20 @@ func connectDb(
 
 	retry.ForeverSleep(
 		timeDelay,
-		func(i int) error {
+		func(attempt int) error {
+			logger.Infof(strings.LogAttemptConnectDb, attempt)
+
 			ctx, cancel := context.WithTimeout(ctx, timeDelay)
 			defer cancel()
 
+			logger.Infoln(strings.LogTryConnectDb)
+
 			pool, err = pgxpool.Connect(ctx, dns)
 			if err != nil {
-				// logger.Fatalf(strings.LogFatalConnectDb, err)
+				logger.Errorf(strings.LogFatalConnectDb, err)
 				return err
 			} else {
-				// logger.Infoln(strings.LogConnectSuccess)
+				logger.Infoln(strings.LogConnectSuccess)
 			}
 
 			return nil

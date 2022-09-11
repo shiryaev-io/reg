@@ -3,7 +3,6 @@ package exceptions
 import (
 	"encoding/json"
 	"net/http"
-	"reg/cmd/internal/res/strings"
 )
 
 // Кастомная ошибка запросов
@@ -26,16 +25,6 @@ func (apiError *ApiError) Marshal() []byte {
 		return nil
 	}
 	return marshal
-}
-
-// Возвращает ошибку, что пользователь не авторизован
-func UnauthorizedError(err error) *ApiError {
-	return &ApiError{
-		Status:     http.StatusUnauthorized,
-		Err:        err,
-		Message:    strings.ErrorUserUnauthorized,
-		DevMessage: err.Error(),
-	}
 }
 
 // Возвращает ошибку, если пользователь ввел неккоретные данные, 

@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"reg/cmd/internal/res/strings"
 	"reg/cmd/internal/server/routes"
 	"reg/cmd/internal/server/services"
 	"reg/cmd/pkg/logging"
@@ -37,9 +38,11 @@ func NewServer(
 
 // Запускает сервер
 func (server *server) Run() {
+	server.logger.Infoln(strings.LogGetHostAndPortEnv)
 	host := os.Getenv(serviceHost)
 	port := os.Getenv(servicePort)
 	serviceUrl := host + ":" + port
 
+	server.logger.Infof(strings.LogRunServer, serviceUrl)
 	log.Fatal(http.ListenAndServe(serviceUrl, server.router.Router))
 }
