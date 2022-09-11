@@ -33,6 +33,8 @@ func (route *ApiRoute) Init() {
 		urlRegistration,
 		regController.Registration,
 	).Methods(post)
+
+	route.Router.Use(middlewares.HeaderMiddleware)
 }
 
 func (route *ApiRoute) handlerFunc(
