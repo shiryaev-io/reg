@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"reg/cmd/internal/res/strings"
 	"reg/cmd/internal/server/models/db"
 	"reg/cmd/pkg/logging"
@@ -37,7 +38,8 @@ func (service *UserService) Registration(
 	if user != nil {
 		service.Logger.Errorln(strings.LogErrorUserAlreadyExists)
 
-		return errors.New("Пользователь с почтовым адресом " + email + " уже существует")
+		errorMessage := fmt.Sprintf(strings.ErrorUserWithEmailExists, email)
+		return errors.New(errorMessage)
 	}
 
 	service.Logger.Infoln(strings.LogGenerateHashedPassword)

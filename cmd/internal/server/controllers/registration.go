@@ -29,7 +29,7 @@ func (controller *RegistrationController) Registration(
 	if err != nil {
 		controller.Logger.Errorf(strings.LogErrorInvalidRequestBodyFormat, err)
 
-		return nil, exceptions.BadRequest("Не удалось зарегистрироваться. Попробуйте позже", err)
+		return nil, exceptions.BadRequest(strings.ErrorRegistrationTryAgainLater, err)
 	}
 
 	controller.Logger.Infoln(strings.LogRegistration)
@@ -41,7 +41,7 @@ func (controller *RegistrationController) Registration(
 	if err != nil {
 		controller.Logger.Errorf(strings.LogErrorRegistration, err)
 
-		return nil, exceptions.BadRequest("Не удалось зарегистрироваться", err)
+		return nil, exceptions.BadRequest(strings.ErrorTryEnterOtherData, err)
 	}
 
 	return &responses.Common{
