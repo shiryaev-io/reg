@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
+	"reg/cmd/internal/res/strings"
 	"reg/cmd/internal/server/exceptions"
 	"reg/cmd/internal/server/models/requests"
 	"reg/cmd/internal/server/models/responses"
@@ -22,22 +22,25 @@ func (controller *RegistrationController) Registration(
 	response http.ResponseWriter,
 	request *http.Request,
 ) (*responses.Common, error) {
-	body, err := ioutil.ReadAll(request.Body)
+	controller.Logger.Infoln(strings.LogGettingRequestBody)
+	
+	userRequest := &requests.User{}
+	err := json.NewDecoder(request.Body).Decode(userRequest)
 	if err != nil {
-		return nil, exceptions.BadRequest("Необходимо передавать Body в запрос", err)
+		controller.Logger.Errorf(strings.LogErrorInvalidRequestBodyFormat, err)
+
+		return nil, exceptions.BadRequest("Не удалось зарегистрироваться. Попробуйте позже", err)
 	}
 
-	userRequest := &requests.User{}
-	err = json.Unmarshal(body, userRequest)
-	if err != nil {
-		return nil, exceptions.BadRequest("Неверный формат Body", err)
-	}
+	controller.Logger.Infoln(strings.LogRegistration)
 
 	err = controller.UserService.Registration(
 		userRequest.Email,
 		userRequest.Password,
 	)
 	if err != nil {
+		controller.Logger.Errorf(strings.LogErrorRegistration, err)
+
 		return nil, exceptions.BadRequest("Не удалось зарегистрироваться", err)
 	}
 
