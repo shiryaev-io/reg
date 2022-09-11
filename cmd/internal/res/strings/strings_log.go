@@ -23,4 +23,8 @@ const (
 	LogErrorGenerateHashedPassword = "Ошибка генерации захешированного пароля: %v"
 	LogCreateUserInDb              = "Создание пользователя в БД"
 	LogErrorCreateUserInDb         = "Ошибка создания пользователя в БД: %v"
+
+	LogStartValidData    = "Начало валидации данных"
+	LogErrorValidData    = "Ошибка валидации данных: %v"
+	LogStartRegistration = "Начало регистрации пользователя"
 )
