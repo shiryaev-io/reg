@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/mail"
 	"reg/cmd/internal/res/strings"
+	"reg/cmd/internal/server/exceptions"
 	"reg/cmd/pkg/logging"
 )
 
@@ -16,11 +17,13 @@ type ValidationService struct {
 func (service *ValidationService) Validate(email, password string) error {
 	isEmailValid := service.validateEmail(email)
 	if !isEmailValid {
-		return errors.New(strings.ErrorEmailValid)
+		err := errors.New(strings.ErrorEmailValid)
+		return exceptions.BadRequest(err.Error(), err)
 	}
 	isPasswordValid := service.validatePassword(password)
 	if !isPasswordValid {
-		return errors.New(strings.ErrorPasswordValid)
+		err := errors.New(strings.ErrorPasswordValid)
+		return exceptions.BadRequest(err.Error(), err)
 	}
 	return nil
 }

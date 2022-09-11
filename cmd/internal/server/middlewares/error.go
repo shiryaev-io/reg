@@ -43,7 +43,7 @@ func handleError(response http.ResponseWriter, err error) {
 	apiError = &exceptions.ApiError{
 		Status:     status,
 		Err:        err,
-		Message:    strings.MessageUnforeseenError,
+		Message:    strings.ErrorRegistrationTryAgainLater,
 		DevMessage: err.Error(),
 	}
 	response.WriteHeader(status)
