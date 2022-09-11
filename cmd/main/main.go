@@ -91,8 +91,12 @@ func initAndRunServer(logger *logging.Logger) {
 		UserStorage: registrationDatabase,
 		Logger:      logger,
 	}
+	validateService := &services.ValidationService{
+		Logger: logger,
+	}
 	regService := &services.RegistrationService{
 		UserService: userService,
+		ValidationService: validateService,
 		Logger:      logger,
 	}
 
