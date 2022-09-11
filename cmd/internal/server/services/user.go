@@ -26,7 +26,6 @@ type UserService struct {
 func (service *UserService) Registration(
 	email, password string,
 ) error {
-	// TODO: валидация пароля
 	service.Logger.Infoln(strings.LogFingUserByEmail)
 	// Проверка, что пользователь уже существует
 	user, err := service.FindByEmail(email)
