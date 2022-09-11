@@ -40,9 +40,9 @@ func (storage *registrationDatabase) FindByEmail(email string) (*db.User, error)
 	err := storage.pool.
 		QueryRow(context.Background(), query, email).
 		Scan(
-			user.Id,
-			user.Email,
-			user.Password,
+			&user.Id,
+			&user.Email,
+			&user.Password,
 		)
 	if err != nil {
 		return nil, err
@@ -53,9 +53,10 @@ func (storage *registrationDatabase) FindByEmail(email string) (*db.User, error)
 // Создает пользователя в БД
 func (storage *registrationDatabase) Create(email, password string) error {
 	query := queries.QueryInsertUser
+	var idUser uint64
 	err := storage.pool.
 		QueryRow(context.Background(), query, email, password).
-		Scan()
+		Scan(&idUser)
 	if err != nil {
 		return err
 	}
