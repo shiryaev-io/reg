@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"os/signal"
+	"reg/cmd/internal/res/strings"
 	"reg/cmd/internal/server"
 	"reg/cmd/internal/server/adapters/db/postgresql"
 	"reg/cmd/internal/server/config"
@@ -54,7 +55,7 @@ func listenerSignal(sig chan bool, logger *logging.Logger) {
 	)
 
 	for signal := range c {
-		// logger.Infof(strings.LogGetSignalSuccess, signal.String())
+		logger.Infof(strings.LogGetSignalSuccess, signal.String())
 
 		switch signal {
 		case syscall.SIGINT, syscall.SIGTERM:
@@ -83,7 +84,7 @@ func initAndRunServer(logger *logging.Logger) {
 		logger,
 	)
 	if err != nil {
-		// Logging
+		logger.Errorln(strings.LogGetDatabaseError)
 	}
 
 	userService := &services.UserService{
