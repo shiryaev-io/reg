@@ -25,8 +25,8 @@ type ApiRoute struct {
 
 func (route *ApiRoute) Init() {
 	regController := &controllers.RegistrationController{
-		UserService: route.RegService.UserService,
-		Logger:      route.Logger,
+		RegService: route.RegService,
+		Logger:     route.Logger,
 	}
 
 	route.handlerFunc(
