@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"reg/cmd/internal/res/strings"
-	"reg/cmd/internal/server/exceptions"
 	"reg/cmd/internal/server/models/requests"
 	"reg/cmd/internal/server/models/responses"
 	"reg/cmd/internal/server/services"
@@ -29,7 +28,7 @@ func (controller *RegistrationController) Registration(
 	if err != nil {
 		controller.Logger.Errorf(strings.LogErrorInvalidRequestBodyFormat, err)
 
-		return nil, exceptions.BadRequest(strings.ErrorRegistrationTryAgainLater, err)
+		return nil, err
 	}
 
 	controller.Logger.Infoln(strings.LogRegistration)
@@ -41,11 +40,11 @@ func (controller *RegistrationController) Registration(
 	if err != nil {
 		controller.Logger.Errorf(strings.LogErrorRegistration, err)
 
-		return nil, exceptions.BadRequest(strings.ErrorTryEnterOtherData, err)
+		return nil, err
 	}
 
 	return &responses.Common{
 		Status: http.StatusNoContent,
 		Body:   nil,
-	}, err
+	}, nil
 }

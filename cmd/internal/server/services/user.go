@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"reg/cmd/internal/res/strings"
+	"reg/cmd/internal/server/exceptions"
 	"reg/cmd/internal/server/models/db"
 	"reg/cmd/pkg/logging"
 
@@ -38,7 +39,8 @@ func (service *UserService) Registration(
 		service.Logger.Errorln(strings.LogErrorUserAlreadyExists)
 
 		errorMessage := fmt.Sprintf(strings.ErrorUserWithEmailExists, email)
-		return errors.New(errorMessage)
+		err = errors.New(errorMessage)
+		return exceptions.BadRequest(err.Error(), err)
 	}
 
 	service.Logger.Infoln(strings.LogGenerateHashedPassword)
